@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras</title>
+  <link rel="stylesheet" href="Estilos/pedidos.css">
+  
+</head>
+<body>
+  <div id="contenedor">
+    <!-- El contenido cargado se mostrará aquí -->
+  </div>
+  <div id="compras">
+    <h1>Carrito de Compras</h1>
+  
+    <div id="productos">
+      <!-- Aquí se mostrarán los productos del carrito -->
+    </div>
+  
+    <button id="cargarProductos">Cargar Productos</button>
+  </div>
+ 
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+   // Recuperar productos del caché (si existen)
+   const storedProductosPedido = localStorage.getItem("productosPedido");
+   const productosDiv = $("#productos");
+ 
+   $("#cargarProductos").click(function() {
+     if (productosDiv.is(":hidden")) {
+       if (storedProductosPedido) {
+         const productosPedido = JSON.parse(storedProductosPedido);
+         productosDiv.empty(); // Limpia cualquier contenido previo
+ 
+         // Recorrer productos almacenados y mostrarlos
+         productosPedido.forEach(producto => {
+           const productoDiv = $("<div>");
+ 
+           const nombreProducto = $("<h2>").text(producto.nombre);
+           const precioProducto = $("<p>").text(`Precio: $${producto.precio}`);
+           const imagenProducto = $("<img>").attr("src", producto.imagen).attr("alt", producto.nombre);
+ 
+           productoDiv.append(nombreProducto, precioProducto, imagenProducto);
+           productosDiv.append(productoDiv);
+         });
+ 
+         productosDiv.show(); // Muestra la sección de productos
+       }
+       $(this).text("Ocultar Productos");
+      } else {
+        productosDiv.hide(); // Oculta la sección de productos
+        $(this).text("Cargar Productos");
+      }
+    });
+  });
+  
+    </script>
+    <script src="javascript/cargar.js"></script>
+    <footer>
+      <img clas="imgcuestionario" src="img/zyro-image.png" alt="">
+      <p><a href="index.html">Home</a> | <a href="about.html">About</a> | <a href="service.html">Services</a> | <a href="pedido.html">Pedido</a> |<a href="galeria.html">Galeria</a></p> 
+      <p class="derechos">Copyright &copy; <a href="#">Flor de Loto</a></p>
+     
+    </footer>
+  </body>
+  </html>
+
